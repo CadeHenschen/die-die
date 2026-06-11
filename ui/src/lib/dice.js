@@ -8,6 +8,9 @@ export const VALID_SIDES = [4, 6, 8, 10, 12, 20, 100];
  * @returns {number}
  */
 export function rollDie(sides) {
+  if (!Number.isInteger(sides) || !VALID_SIDES.includes(sides)) {
+    throw new Error(`Invalid die sides: ${sides}`);
+  }
   return Math.floor(Math.random() * sides) + 1;
 }
 
@@ -20,6 +23,8 @@ export function rollDiceSet(entries) {
   const rolls = [];
   let total = 0;
   for (const { count, sides } of entries) {
+    if (!Number.isInteger(count) || count < 1) continue;
+    if (!Number.isInteger(sides) || !VALID_SIDES.includes(sides)) continue;
     const results = Array.from({ length: count }, () => rollDie(sides));
     const subtotal = results.reduce((a, b) => a + b, 0);
     rolls.push({ notation: `${count}d${sides}`, results, subtotal });
