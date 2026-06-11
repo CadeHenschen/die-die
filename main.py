@@ -61,10 +61,10 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def _parse_dice_set(notations: List[str]) -> DiceSet:
     """Parse a list of notation strings into a DiceSet."""
+    from die_roller.dice import _NOTATION_RE
+
     ds = DiceSet()
     for notation in notations:
-        from die_roller.dice import _NOTATION_RE, Die
-
         match = _NOTATION_RE.match(notation.strip())
         if not match:
             raise ValueError(
