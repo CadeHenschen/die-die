@@ -1,18 +1,8 @@
-/** PresetPanel — save, list, roll, and delete named dice presets. */
+/** PresetPanel — save, list, roll, and delete named dice presets (scoped to active profile). */
 
 import { useState } from 'react';
 import { formatDiceSet } from '../lib/dice';
 
-/**
- * @param {{
- *   presets: Record<string, Array<{count: number, sides: number}>>,
- *   currentEntries: Array<{count: number, sides: number}>,
- *   onSave: (name: string) => void,
- *   onLoad: (name: string) => void,
- *   onDelete: (name: string) => void,
- *   onRollPreset: (name: string) => void,
- * }} props
- */
 export default function PresetPanel({
   presets,
   currentEntries,
@@ -26,14 +16,8 @@ export default function PresetPanel({
 
   const handleSave = () => {
     const name = newName.trim();
-    if (!name) {
-      setError('Please enter a preset name.');
-      return;
-    }
-    if (currentEntries.length === 0) {
-      setError('Select at least one die before saving.');
-      return;
-    }
+    if (!name) { setError('Enter a preset name.'); return; }
+    if (currentEntries.length === 0) { setError('Select at least one die first.'); return; }
     setError('');
     onSave(name);
     setNewName('');
@@ -73,28 +57,9 @@ export default function PresetPanel({
                 <span className="preset-notation">{formatDiceSet(presets[name])}</span>
               </div>
               <div className="preset-actions">
-                <button
-                  className="btn btn--icon"
-                  title="Load into picker"
-                  onClick={() => onLoad(name)}
-                  aria-label={`Load preset ${name}`}
-                >
-                  ✎
-                </button>
-                <button
-                  className="btn btn--roll btn--sm"
-                  onClick={() => onRollPreset(name)}
-                  aria-label={`Roll preset ${name}`}
-                >
-                  Roll
-                </button>
-                <button
-                  className="btn btn--danger btn--sm"
-                  onClick={() => onDelete(name)}
-                  aria-label={`Delete preset ${name}`}
-                >
-                  ✕
-                </button>
+                <button className="btn btn--icon" title="Load into picker" onClick={() => onLoad(name)} aria-label={`Load preset ${name}`}>✎</button>
+                <button className="btn btn--roll btn--sm" onClick={() => onRollPreset(name)} aria-label={`Roll preset ${name}`}>Roll</button>
+                <button className="btn btn--danger btn--sm" onClick={() => onDelete(name)} aria-label={`Delete preset ${name}`}>✕</button>
               </div>
             </li>
           ))}

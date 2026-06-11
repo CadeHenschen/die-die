@@ -1,14 +1,5 @@
 /** RollResult — animated display of the most recent roll. */
 
-/**
- * @param {{
- *   result: {
- *     rolls: Array<{notation: string, results: number[], subtotal: number}>,
- *     total: number
- *   } | null,
- *   rolling: boolean
- * }} props
- */
 export default function RollResult({ result, rolling }) {
   if (rolling) {
     return (
@@ -42,16 +33,9 @@ export default function RollResult({ result, rolling }) {
           </div>
         ))}
       </div>
-      {result.rolls.length > 1 && (
-        <div className="result-total">
-          Total: <strong>{result.total}</strong>
-        </div>
-      )}
-      {result.rolls.length === 1 && (
-        <div className="result-total">
-          Total: <strong>{result.total}</strong>
-        </div>
-      )}
+      <div className="result-total">
+        Total: <strong>{result.total}</strong>
+      </div>
     </div>
   );
 }

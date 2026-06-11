@@ -2,7 +2,6 @@
 
 import { VALID_SIDES } from '../lib/dice';
 
-/** SVG polygon shapes for each die face */
 const DIE_ICONS = {
   4: (
     <svg viewBox="0 0 40 40" aria-hidden="true">
@@ -48,19 +47,13 @@ const DIE_ICONS = {
   ),
 };
 
-/**
- * @param {{
- *   counts: Record<number, number>,
- *   onChange: (sides: number, delta: number) => void
- * }} props
- */
 export default function DicePicker({ counts, onChange }) {
   return (
     <div className="dice-picker">
       {VALID_SIDES.map((sides) => {
         const count = counts[sides] ?? 0;
         return (
-          <div key={sides} className={`die-card ${count > 0 ? 'die-card--active' : ''}`}>
+          <div key={sides} className={`die-card${count > 0 ? ' die-card--active' : ''}`}>
             <button
               className="die-icon"
               onClick={() => onChange(sides, 1)}
@@ -76,17 +69,13 @@ export default function DicePicker({ counts, onChange }) {
                 onClick={() => onChange(sides, -1)}
                 disabled={count === 0}
                 aria-label={`Remove one d${sides}`}
-              >
-                −
-              </button>
+              >−</button>
               <span className="stepper-count">{count}</span>
               <button
                 className="stepper-btn"
                 onClick={() => onChange(sides, 1)}
                 aria-label={`Add one d${sides}`}
-              >
-                +
-              </button>
+              >+</button>
             </div>
           </div>
         );
