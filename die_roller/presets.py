@@ -1,7 +1,6 @@
 """Preset management: save and load named sets of dice."""
 
 import json
-import os
 from pathlib import Path
 from typing import Dict, List, Optional
 
