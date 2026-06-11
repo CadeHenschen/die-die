@@ -21,17 +21,30 @@ const PROFILES_KEY = 'die_die_profiles';
 const DEFAULT_PROFILE = 'default';
 
 /** @returns {{ activeProfile: string, profiles: Record<string, { presets: Record<string, Array<{count:number,sides:number}>> }> }} */
+function normalizeStore(store) {
+  const profiles =
+    store && typeof store === 'object' && store.profiles && typeof store.profiles === 'object'
+      ? store.profiles
+      : {};
+
+  if (!profiles[DEFAULT_PROFILE]) profiles[DEFAULT_PROFILE] = { presets: {} };
+
+  const activeProfile =
+    typeof store?.activeProfile === 'string' && store.activeProfile in profiles
+      ? store.activeProfile
+      : DEFAULT_PROFILE;
+
+  return { activeProfile, profiles };
+}
+
 function loadStore() {
   try {
     const raw = localStorage.getItem(PROFILES_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (parsed && typeof parsed === 'object' && parsed.profiles) return parsed;
-    }
+    if (raw) return normalizeStore(JSON.parse(raw));
   } catch {
     // fall through to default
   }
-  return { activeProfile: DEFAULT_PROFILE, profiles: { [DEFAULT_PROFILE]: { presets: {} } } };
+  return normalizeStore({});
 }
 
 function saveStore(store) {
