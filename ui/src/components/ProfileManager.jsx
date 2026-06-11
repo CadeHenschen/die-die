@@ -45,24 +45,33 @@ export default function ProfileManager({
 
       <div className="profile-tabs">
         {profiles.map((name) => (
-          <button
+          <div
             key={name}
             className={`profile-tab${name === activeProfile ? ' profile-tab--active' : ''}`}
+            role="button"
+            tabIndex={0}
             onClick={() => onSwitch(name)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onSwitch(name);
+              }
+            }}
           >
             {name}
             {name !== 'default' && name !== activeProfile && (
-              <span
+              <button
+                type="button"
                 className="profile-tab-delete"
-                role="button"
-                tabIndex={0}
+                style={{ background: 'none', border: 'none' }}
                 title={`Delete profile "${name}"`}
                 aria-label={`Delete profile ${name}`}
                 onClick={(e) => { e.stopPropagation(); onDelete(name); }}
-                onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); onDelete(name); } }}
-              >✕</span>
+              >
+                ✕
+              </button>
             )}
-          </button>
+          </div>
         ))}
       </div>
 
