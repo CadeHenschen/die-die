@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+
+# Node
+ui/node_modules/
+ui/dist/
+
+# Git / IDE
+.git/
+.gitignore
+*.md
+
+# Misc
+.env
