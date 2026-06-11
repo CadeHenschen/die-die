@@ -2,10 +2,9 @@
 
 import argparse
 import sys
-from pathlib import Path
 from typing import List
 
-from die_roller.dice import DiceSet, roll_notation
+from die_roller.dice import DiceSet
 from die_roller.presets import PresetManager
 
 
